@@ -96,11 +96,11 @@ MCP is an open protocol supported across a **wide range of clients and servers**
 
 Servers are programs that expose specific capabilities and are typically built to wrap or federate access to systems and data — a database to query and fetch data and give the LLM access, a CRM like Salesforce to read and write remotely, or the user's local laptop and version control (e.g. Git) APIs.
 
-The ecosystem includes both **official/adopted servers** (e.g. reference servers like the Sentry server, filesystem servers) and hundreds of **community servers** published through the Model Context Protocol ecosystem. Because there is a **single standard interface**, a client that speaks MCP can connect to any MCP server with zero additional work.
+The ecosystem includes both **official/adopted servers** (e.g. reference servers like the Sentry MCP server, filesystem servers) and hundreds of **community servers** published through the MCP ecosystem. Because there is a **single standard interface**, a client that speaks MCP can connect to any MCP server with zero additional work.
 
 ### Official SDK ecosystem
 
-The MCP project also provides **official SDKs in multiple languages** that implement MCP — SDKs handle the protocol details so developers can focus on building their features (tools, resources, prompts, clients, servers, debugging with the MCP Inspector, etc.).
+The MCP project also provides **official SDKs in multiple languages** that implement MCP — SDKs handle the protocol details so developers can focus on building their features (servers, clients, debugging with the MCP Inspector, and more).
 
 > **Net for new teammates:** when you want to give your AI client new data or capabilities, you rarely need to build a new integration — you build one MCP **server** and any MCP-capable client, including your own, can use it.
 
@@ -108,13 +108,13 @@ The MCP project also provides **official SDKs in multiple languages** that imple
 
 ## 4. Videos: Walkthroughs, Talks, and Tutorials
 
-**Which video to pick:** we picked three videos because together they cover the topic from different angles — a short concept-first explainer (IBM Technology, 08 min), a deep architect-led workshop from Schrödinger workshop by the Anthropic team (AI Engineer, 1h 44m), and a hands-on Microsoft technical-meeting demo which shows how MCP integrates with real development tooling (Microsoft Developer, 20 min). The Anthropic workshop is the most complete for expansion; the IBM Technology one is the best 8-minute primer; the Microsoft session is the best live demo of embeddings and data interpretation (one video that covers the most ground for a newcomer).
+The videos section header below lists our picks. Conflicts can be summarized in the bullet list:
 
 - **[What is MCP? Integrate AI Agents with Databases & APIs](https://www.youtube.com/watch?v=eur8dUO9mvE)** — **IBM Technology**. Title, publisher: IBM Technology; duration on the YouTube listing: **07:58** (~8 minutes). Best for: a quick, accurate introduction to the host/client/server architecture and the model/LLM layer.
-- **[Building Agents with Model Context Protocol - Full Workshop with Mahesh Murag of Anthropic](https://www.youtube.com/watch?v=kQmXtrmQ5Zg)** — **AI Engineer**. Title, publisher: AI Engineer (Anthropic's applied AI team); duration on the YouTube listing: **~1 hour 44 minutes**. Best for: the deepest walkthrough available — MCP's design rationale, the "N times M" → single-standard shift, the replicable architecture patterns behind it, and what a production host actually does.
-- **[Introduction to Model Context Protocol (MCP) Servers | DEM517](https://www.youtube.com/watch?v=cfwooBzzHBs)** — **Microsoft Developer** (technical-meetings thread; also presented at Visual Studio Live! Microsoft HQ 2025). Title, publisher: Microsoft Developer; duration: 20-minute Fast Focus session. Best for: a live architectural and hands-on demo, including background on securing MCP servers; a good next watch after the IBM video.
+- **[Building Agents with Model Context Protocol - Full Workshop with Mahesh Murag of Anthropic](https://www.youtube.com/watch?v=kQmXtrmQ5Zg)** — **AI Engineer**. Title, publisher: AI Engineer (Anthropic's applied AI team); duration on the YouTube listing: **~1 hour 44 minutes**. Best for: the deepest walkthrough available — MCP's design rationale, the N times M to single-standard shift, the replicable architecture patterns behind it, and what a production host actually does.
+- **[Introduction to Model Context Protocol (MCP) Servers | DEM517](https://www.youtube.com/watch?v=cfwooBzzHBs)** — **Microsoft Developer** (technical-meetings thread; also presented at Visual Studio Live! Microsoft HQ 2025). Title, publisher: Microsoft Developer; duration: 20-minute Fast Focus session. Best for: a live architectural and hands-on demo; good next watch after the IBM video.
 
-> Note: the remaining YouTube listing durations for the two longer videos were not confirmable from the listing pages during research, so durations here are as explicitly shown on YouTube (IBM Technology 07:58; the Anthropic workshop is listed as 2 hours on the creator's note and ~1h 44m elsewhere; Microsoft Developer is a 20-minute Fast Focus session).
+Preparation note: the remaining YouTube listing durations for these two videos were not confirmable from the listing pages during research, so durations are quoted only where explicitly shown on YouTube (IBM Technology 07:58; the Anthropic workshop is listed as 2 hours on the creator's announcement post and ~1h 44m elsewhere; Microsoft Developer is a 20-minute Fast Focus session).
 
 ---
 
@@ -123,7 +123,7 @@ The MCP project also provides **official SDKs in multiple languages** that imple
 These documentation pages were actually used for the primer, architecture, and ecosystem sections:
 
 - [What is the Model Context Protocol (MCP)?](https://modelcontextprotocol.io/docs/getting-started/intro) — official documentation introduction: definition, the USB-C analogy, what MCP enables, why it matters, and the broad ecosystem support statement.
-- [Architecture overview](https://modelcontextprotocol.io/docs/concepts/architecture) — participants (host, client, server), transport (stdio vs. Streamable HTTP), and the two-layer model (data layer / transport layer); example document lines.
+- [Architecture overview](https://modelcontextprotocol.io/docs/concepts/architecture) — participants (host, client, server), transports (stdio vs. Streamable HTTP), and the two-layer model (data layer / transport layer).
 - [Understanding MCP servers](https://modelcontextprotocol.io/docs/concepts/learn/server-concepts) — the server primitives: tools, resources, and prompts, plus `tools/list` and `tools/call` protocol operations.
 - [Understanding MCP clients](https://modelcontextprotocol.io/docs/concepts/learn/client-concepts) — the role of the client within the host, and the client-facing features (elicitation, roots, sampling).
 - [llms.txt](https://modelcontextprotocol.io/llms.txt) — full documentation index used to locate all pages above.
