@@ -6,7 +6,7 @@ This note is for new teammates joining the team. It covers what the Model Contex
 
 MCP (Model Context Protocol) is an **open-source standard for connecting AI applications to external systems**. Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators) and workflows (e.g. specialized prompts) — enabling them to access key information and perform tasks.
 
-The官方 analogy from the documentation is that MCP is like **"a USB-C port for AI applications"**: just as USB-C provides a standardized way to connect electronic devices, MCP provides a standardized way to connect AI applications to external systems. Instead of building a custom integration for every model-to-tool pairing, you build once against the standard and integrate everywhere.
+The official analogy from the documentation is that MCP is like **"a USB-C port for AI applications"**: just as USB-C provides a standardized way to connect electronic devices, MCP provides a standardized way to connect AI applications to external systems. Instead of building a custom integration for every model-to-tool pairing, you build once against the standard and integrate everywhere.
 
 ### What MCP can enable in practice
 
@@ -62,16 +62,15 @@ Selected clients from the official MCP client support matrix (with their feature
 | Microsoft Copilot Studio | ❌ | ❌ | ✅ | ❌ | ❌ |
 | Roo Code | ✅ | ❌ | ✅ | ❌ | ❌ |
 
-Other notable MCP clients include Copilot-MCP, Goose, Sourcegraph Cody, LibreChat, mcp-agent, oterm, Superinterface, TheiaAI/TheiaIDE, Genkit, GenAIScript, Emacs Mcp, fast-agent, Daydreams Agents, SpinAI, Witsy, sling, plus CLI/agent tools such as Codex CLI, Gemini CLI, and Open WebUI. The full current matrix lives in the official MCP docs repository (`clients.mdx`).
+Other notable MCP clients include Copilot-MCP, Goose, Sourcegraph Cody, LibreChat, mcp-agent, oterm, Superinterface, TheiaAI/TheiaIDE, Genkit, GenAIScript, Emacs Mcp, fast-agent, Daydreams Agents, SpinAI, and Witsy, plus CLI/agent tools such as Codex CLI, Gemini CLI, and Open WebUI. Per third-party matrices, ChatGPT (OpenAI) and Gemini CLI (Google) also support MCP. The full current matrix lives in the official MCP docs repository (`clients.mdx`).
 
 ## 4. Video walkthroughs
 
-Picks for onboarding, mixing conference talks, workshops, and beginner tutorials. Durations are noted where the listing shows one.
+Picks for onboarding, mixing conference-style talks, workshops, and beginner tutorials. Durations are noted where the listing shows one.
 
-1. **Analytics Vidhya — "Model Context Protocol(MCP) Explained for Beginners in Python (with multiple examples)!"** ([youtube.com/watch?v=LYfr7qusVSs](https://www.youtube.com/watch?v=LYfr7qusVSs)) — Tutorial with hands-on examples; length shown as **21:19**.
-2. **AI Engineer — "Building Agents with Model Context Protocol - Full Workshop with Mahesh Murag of Anthropic"** ([youtube.com/watch?v=kQmXtrmQ5Zg](https://www.youtube.com/watch?v=kQmXtrmQ5Zg)) — Conference-style workshop talk by Mahesh Murag of Anthropic's applied AI team on the philosophy and adoption of MCP; duration not listed in the search result.
-3. **PyCon AU 2025 — "MCP for dummies: Feed more context to LLM" (Tarun Jain)** ([youtube.com/watch?v=1uZl3e8GdsU](https://www.youtube.com/watch?v=1uZl3e8GdsU)) — Conference talk covering what MCP is, the architecture and transport mechanism, and security, with code demos; duration not listed in the search result.
-4. **Hugging Face — "Model Context Protocol Course from Hugging Face - MCP Course Introduction"** ([youtube.com/watch?v=p4q6LI-2yZ8](https://www.youtube.com/watch?v=p4q6LI-2yZ8)) — Onboarding video for Hugging Face's beginners-to-advanced MCP course; duration not listed in the search result.
+1. **Analytics Vidhya — "Model Context Protocol(MCP) Explained for Beginners in Python (with multiple examples)!"** ([youtube.com/watch?v=LYfr7qusVSs](https://www.youtube.com/watch?v=LYfr7qusVSs)) — Beginner tutorial with hands-on examples; length shown as **21:19**.
+2. **Postman — "How to Build Your First MCP Server (in Less Than 5 Minutes)"** ([youtube.com/watch?v=Y4bpWRLdRoA](https://www.youtube.com/watch?v=Y4bpWRLdRoA)) — Hands-on tutorial building an MCP server in Node.js/TypeScript and connecting it live to Claude Desktop; length shown as **08:20**.
+3. **Microsoft Developer — "Full Course (Lessons 1-11) MCP for Beginners"** ([youtube.com/watch?v=VfZlglOWWZw](https://www.youtube.com/watch?v=VfZlglOWWZw)) — Full beginner course from Microsoft Developer covering the client-server model, tools, resources, and prompts.
 
 ## Sources
 
@@ -79,5 +78,4 @@ Picks for onboarding, mixing conference talks, workshops, and beginner tutorials
 - [Architecture overview — official docs](https://modelcontextprotocol.io/docs/concepts/architecture)
 - [Tools — official docs](https://modelcontextprotocol.io/docs/concepts/tools)
 - [Resources — official docs](https://modelcontextprotocol.io/docs/concepts/resources)
-- [MCP clients overview (feature support matrix) — modelcontextprotocol/docs repo](https://github.com/modelcontextprotocol/docs/blob/main/clients.mdx)
-- [Analytics Vidhya video listing](https://www.youtube.com/watch?v=LYfr7qusVSs) (runtime 21:19 shown on the listing)
+- [MCP clients overview (feature support matrix)](https://github.com/modelcontextprotocol/docs/blob/main/clients.mdx)
