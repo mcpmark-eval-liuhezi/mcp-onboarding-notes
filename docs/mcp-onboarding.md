@@ -1,76 +1,113 @@
 # MCP Onboarding Notes
 
-A plain-language reference for new teammates joining the team: what the Model Context Protocol (MCP) is, how its client/server architecture works, which AI applications support it today, and a short selection of videos for getting oriented.
+A plain-language onboarding note on the **Model Context Protocol (MCP)** for new team members.
 
-## 1. What MCP Is (Primer)
+Contents:
 
-The Model Context Protocol (MCP) is an open-source standard for connecting AI applications to external systems. Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators) and workflows (e.g. specialized prompts), enabling them to access key information and perform tasks.
+1. [What MCP is](#1-what-mcp-is)
+2. [Architecture: hosts, clients, servers, tools, and resources](#2-architecture-hosts-clients-servers-tools-and-resources)
+3. [Ecosystem: AI applications that support MCP](#3-ecosystem-ai-applications-that-support-mcp)
+4. [Videos: talks, tutorials, and demos](#4-videos-talks-tutorials-and-demos)
+5. [Sources](#5-sources)
 
-A useful mental model: MCP is like a USB-C port for AI applications. Just as USB-C provides a standardized way to connect electronic devices, MCP provides a standardized way to connect AI applications to external systems. Instead of building a custom integration for every model-to-tool combination, a service builds one MCP server and every MCP-compatible AI application can use it — "build once, integrate everywhere."
+---
 
-Why it matters by audience:
+## 1. What MCP is
+
+MCP (Model Context Protocol) is an **open-source standard for connecting AI applications to external systems**. Using MCP, AI applications such as Claude or ChatGPT can connect to data sources (local files, databases), tools (search engines, calculators), and workflows (specialized prompts), enabling them to access key information and perform tasks.
+
+A useful mental model: **MCP is like a USB-C port for AI applications**. Just as USB-C provides a standardized way to connect electronic devices, MCP provides a standardized way to connect AI applications to external systems. This standardization means you build an integration once and it works across many AI clients — “build once, integrate everywhere.”
+
+What MCP can enable in practice:
+
+- Agents accessing your Google Calendar and Notion, acting as a more personalized AI assistant.
+- Claude Code generating an entire web app from a Figma design.
+- Enterprise chatbots connecting to multiple databases across an organization so users can analyze data through chat.
+- AI models creating 3D designs in Blender and printing them on a 3D printer.
+
+Why it matters, per audience:
 
 - **Developers:** MCP reduces development time and complexity when building or integrating with an AI application or agent.
-- **AI applications / agents:** MCP gives them access to an ecosystem of data sources, tools and apps, which enhances their capabilities and improves the end-user experience.
-- **End users:** MCP results in more capable AI applications or agents that can access user data and take actions on the user's behalf when necessary.
+- **AI applications/agents:** MCP gives them access to an ecosystem of data sources, tools, and apps, enhancing capabilities and end-user experience.
+- **End users:** MCP results in more capable AI applications that can access user data and take actions on the user’s behalf.
 
-### What MCP can enable
+MCP focuses solely on the protocol for context exchange — it does not dictate how AI applications use LLMs or manage the provided context.
 
-- Agents can access your Google Calendar and Notion, acting as a more personalized AI assistant.
-- Claude Code can generate an entire web app using a Figma design.
-- Enterprise chatbots can connect to multiple databases across an organization, empowering users to analyze data using chat.
-- AI models can create 3D designs on Blender and print them out using a 3D printer.
+---
 
-## 2. Architecture: Clients, Servers, Tools, and Resources
+## 2. Architecture: hosts, clients, servers, tools, and resources
 
-MCP follows a client-server architecture. An **MCP host** — an AI application such as Claude Code, Claude Desktop, or Visual Studio Code — establishes connections to one or more **MCP servers**. The host creates one **MCP client** for each MCP server it connects to, and each client maintains a dedicated connection with its corresponding server.
+MCP follows a **client-server architecture**. An MCP host — an AI application like Claude Code or Claude Desktop — establishes connections to one or more MCP servers. The host accomplishes this by creating one MCP client for each MCP server; each client maintains a dedicated connection with its corresponding server.
+
+Key participants:
 
 - **MCP Host:** the AI application that coordinates and manages one or multiple MCP clients.
-- **MCP Client:** a component that maintains a connection to an MCP server and obtains context from that server for the host to use. Local MCP servers using the STDIO transport typically serve a single client; remote MCP servers using the Streamable HTTP transport typically serve many clients.
-- **MCP Server:** a program that provides context to MCP clients. Servers can execute locally (e.g. the filesystem server launched by Claude Desktop via STDIO) or remotely (e.g. the official Sentry MCP server via Streamable HTTP).
+- **MCP Client:** a component that maintains a connection to an MCP server and obtains context from it for the host to use. Local MCP servers using the STDIO transport typically serve a single client; remote servers using the Streamable HTTP transport typically serve many clients.
+- **MCP Server:** a program that provides context to MCP clients. Servers can run locally (e.g., the filesystem server launched by Claude Desktop using STDIO) or remotely (e.g., the official Sentry MCP server on the Sentry platform using Streamable HTTP).
 
-MCP consists of two layers:
+Example: Visual Studio Code acts as an MCP host. When VS Code connects to the Sentry MCP server, the runtime instantiates an MCP client object for that server; connecting to a second server (e.g., the local filesystem server) instantiates another client.
 
-- **Data layer:** defines the JSON-RPC-based protocol for client-server communication, including capability and version discovery and core primitives such as tools, resources, prompts and notifications.
-- **Transport layer:** defines how messages are carried — typically STDIO for local servers and Streamable HTTP for remote ones.
+Two layers make up the protocol:
 
-### Core primitives
+- **Data layer:** a JSON-RPC 2.0-based exchange protocol defining message structure and semantics, including discovery of versions/capabilities, and core primitives such as tools, resources, and prompts, plus notifications and progress tracking.
+- **Transport layer:** defines communication mechanisms and channels, handling connection establishment, message framing, and secure communication between participants.
 
-- **Tools:** servers expose tools that can be invoked by language models. Tools enable models to interact with external systems, such as querying databases, calling APIs, or performing computations. Each tool is uniquely identified by a name and includes metadata describing its schema. Tools are designed to be model-controlled — the language model can discover and invoke them automatically based on its understanding of context and the user's prompt. For trust and safety, there should always be a human in the loop with the ability to deny tool invocations.
-- **Resources:** servers expose resources to share data that provides context to language models, such as files, database schemas, or application-specific information. Each resource is uniquely identified by a URI. Resources are designed to be application-driven — host applications determine how to incorporate context based on their needs (e.g. exposing resources through UI elements, allowing search/filter, or automatic context inclusion).
-- **Prompts:** a third core primitive (per the architecture docs) — prompts are reusable template prompts that servers can expose for models to use.
+MCP supports two transports:
 
-## 3. Ecosystem: Supporting Clients
+- **Stdio transport:** uses standard input/output streams for direct process communication between local processes on the same machine (optimal performance for local servers).
+- **Streamable HTTP transport:** used by remote servers, typically serving many clients.
 
-MCP is an open protocol supported across a wide range of clients and servers. AI assistants like Claude and ChatGPT, and development tools like Visual Studio Code, Cursor, and MCPJam, all support MCP. This broad ecosystem support makes it easy to build once and integrate everywhere.
+Core server features exposed by servers:
 
-Notable examples cited in the official documentation:
+- **Tools** — enable models to interact with external systems (querying databases, calling APIs, performing computations). Each tool is uniquely identified by a name and includes metadata describing its schema; the model can discover and invoke tools automatically. A human-in-the-loop confirmation is recommended for trust and safety.
+- **Resources** — a standardized way for servers to expose data that provides context to language models (files, database schemas, application-specific information), each uniquely identified by a URI. Resources are designed to be application-driven.
+- **Prompts** — reusable interaction templates offered by servers (covered in the protocol’s prompts concept; mentioned here as the third core primitive alongside tools and resources).
 
-- **Claude / Claude Desktop / Claude Code** — first-party MCP clients; Claude Desktop can launch local MCP servers such as the filesystem server.
-- **ChatGPT** — an AI assistant that can connect to data sources, tools, and workflows via MCP.
-- **Visual Studio Code** — acts as an MCP host; when it connects to a server such as the Sentry MCP server or a local filesystem server, the runtime instantiates a dedicated MCP client object for that connection.
-- **Cursor, Windsurf, Goose, Zed, and others** — other development tools and agents that connect to MCP servers.
-- **8,000+ MCP servers** — as of recent talks, there are over 8,000 MCP servers available (e.g. for GitHub, Slack, filesystem access, Figma, Stripe, Supabase), covering most common services.
+Client features include elicitation (servers can ask the user for input), plus notifications and progress tracking for long-running operations.
 
-For developers: MCP SDKs exist for multiple programming languages (Python, JavaScript, Java, C#, Go, and others), so you can start building your own MCP servers in a language you already know.
+---
 
-## 4. Video Walkthroughs
+## 3. Ecosystem: AI applications that support MCP
 
-A short selection of introduction videos — conference talks, tutorials, and live demos — to get oriented with MCP. Durations are noted where the video listing shows one; otherwise the listing did not display a duration.
+MCP is an open protocol with broad ecosystem support across clients and servers. AI assistants like **Claude** and **ChatGPT**, and development tools like **Visual Studio Code**, **Cursor**, and **MCPJam**, all support MCP, making it easy to build once and integrate everywhere.
 
-1. [MCP Explained | Model Context Protocol Tutorial | How Model Context Protocol Works?](https://www.youtube.com/watch?v=znNuYwtMryY) — Simplilearn — 12:14 (length shown on the listing).
-2. [Full Course (Lessons 1-11) MCP for Beginners](https://www.youtube.com/watch?v=VfZlglOWWZw) — Microsoft Developer — duration not shown on the listing; a full beginner course covering host/client/server, tools, resources, and prompts.
-3. [What Are MCP Servers? Complete Beginner Guide + Real Example](https://www.youtube.com/watch?v=3cKwANLhOo8) — Noah Does Coding (NDC talk) — duration not shown on the listing; a hands-on live demo connecting the GitHub MCP server to Visual Studio Code and Claude Code.
-4. [Building Agents with Model Context Protocol - Full Workshop with Mahesh Murag of Anthropic](https://www.youtube.com/watch?v=kQmXtrmQ5Zg) — AI Engineer (talk by Mahesh Murag of Anthropic's applied AI team) — duration not shown on the listing; a conference talk covering the philosophy behind MCP, adoption, and the roadmap.
+Supporting clients include (per the official documentation):
 
-## Sources
+- **Claude / Claude Desktop, Claude Code** — AI applications that act as MCP hosts and connect to MCP servers.
+- **ChatGPT** — AI assistant supporting MCP connections.
+- **Visual Studio Code** — development tool acting as an MCP host; connects to servers such as the Sentry MCP server and the local filesystem server.
+- **Cursor** — AI coding assistant; an MCP client that connects to servers.
+- **MCPJam** — another client supporting MCP connections.
+
+The MCP ecosystem also includes language SDKs for different programming languages, MCP development tools (including the MCP Inspector), and reference server implementations, so servers can be built in Python, TypeScript, and other languages.
+
+---
+
+## 4. Videos: talks, tutorials, and demos
+
+The following videos are recommended for getting up to speed with MCP. Each entry is a link with its title, publisher, and duration where the listing shows one.
+
+1. [**Model Context Protocol (MCP) Explained in 20 Minutes**](https://www.classcentral.com/course/youtube-model-context-protocol-mcp-explained-in-20-minutes-447743) — Shaw Talebi. Duration: 20 minutes (per the listing). Introduces MCP, explains clients and servers, and demonstrates building a custom server with Python and connecting it to Claude Desktop.
+2. [**MCP for dummies: Feed more context to LLM**](https://www.youtube.com/watch?v=1uZl3e8GdsU) — Tarun Jain, presented at PyCon AU 2025 (conference talk). Duration: not listed on the listing. Covers what MCP is and its pain points with LLMs, the architecture, transport mechanism, security, plus a live code demo connecting any MCP server with an agentic framework.
+3. [**WebMCP is MCP for Single Page Apps!**](https://www.youtube.com/watch?v=IAfrzel524s) — Jack Herrington. Duration: 05:32. A live demo/tutorial showing how WebMCP lets Single Page Applications join the AI ecosystem by exposing MCP tools in the browser.
+4. [**Full Course (Lessons 1-11) MCP for Beginners**](https://www.youtube.com/watch?v=VfZlglOWWZw) — Microsoft Developer. Duration: not listed on the listing. A tutorial series covering MCP fundamentals, architecture, and core concepts, with SDKs in Python and JavaScript.
+
+---
+
+## 5. Sources
 
 Documentation pages actually used for this note:
 
-- [What is the Model Context Protocol (MCP)?](https://modelcontextprotocol.io/introduction) — official MCP introduction (what MCP is, why it matters, ecosystem support).
-- [Architecture overview](https://modelcontextprotocol.io/docs/concepts/architecture) — official architecture docs (host/client/server participants, layers, transports, primitives).
-- [Tools](https://modelcontextprotocol.io/docs/concepts/tools) — official tools concept page (model-controlled invocation, human-in-the-loop guidance).
-- [Resources](https://modelcontextprotocol.io/docs/concepts/resources) — official resources concept page (URI-identified context, application-driven interaction, listChanged/subscribe capabilities).
-- [What is the Model Context Protocol (MCP)? (clients page)](https://modelcontextprotocol.io/clients) — official clients/ecosystem page (Claude, ChatGPT, VS Code, Cursor, MCPJam).
+- [What is the Model Context Protocol (MCP)? — official intro](https://modelcontextprotocol.io/docs/getting-started/intro)
+- [Architecture overview — official concepts](https://modelcontextprotocol.io/docs/concepts/architecture)
+- [Tools — official concepts](https://modelcontextprotocol.io/docs/concepts/tools)
+- [Resources — official concepts](https://modelcontextprotocol.io/docs/concepts/resources)
+- [Prompts — official concepts](https://modelcontextprotocol.io/docs/concepts/prompts)
+- [Clients — official ecosystem page](https://modelcontextprotocol.io/clients)
 
-Video metadata was gathered from the respective YouTube listings (Simplilearn listing showed length 12:14; other listings did not display a duration).
+Video sources:
+
+- [Class Central listing: Model Context Protocol (MCP) Explained in 20 Minutes](https://www.classcentral.com/course/youtube-model-context-protocol-mcp-explained-in-20-minutes-447743)
+- [PyCon AU 2025: MCP for dummies — Feed more context to LLM](https://www.youtube.com/watch?v=1uZl3e8GdsU)
+- [Stack Manifest: MCP in 60 seconds — a real session, message by message](https://stackmanifest.com/videos/ai/mcp-in-60-seconds/)
+- [YouTube: WebMCP is MCP for Single Page Apps!](https://www.youtube.com/watch?v=IAfrzel524s)
