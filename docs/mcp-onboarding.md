@@ -14,7 +14,7 @@ In practice, MCP lets AI applications like Claude or ChatGPT:
 - Connect to **tools** (e.g. search engines, calculators)
 - Connect to **workflows** (e.g. specialized prompts)
 
-…so the model can access key information and actually perform tasks rather than just talking about it. For developers, MCP reduces development time and complexity when building or integrating with AI applications; for end users it means more capable assistants that can act on your behalf.
+...so the model can access key information and actually perform tasks rather than just talking about it. For developers, MCP reduces development time and complexity when building or integrating with AI applications; for end users it means more capable assistants that can act on your behalf.
 
 *(Sources: [What is the Model Context Protocol? — modelcontextprotocol.io/introduction](https://modelcontextprotocol.io/introduction); [MCP clients overview](https://modelcontextprotocol.io/clients))*
 
@@ -47,18 +47,18 @@ MCP focuses solely on the protocol for context exchange; it does not dictate how
 
 MCP is an open protocol with broad ecosystem support. AI assistants like **Claude** (including Claude Desktop and Claude Code) and **ChatGPT** support MCP, as do development tools such as **Visual Studio Code, Cursor, MCPJam**, and many others. This "build once, integrate everywhere" model makes it easy to build an MCP server once and have it adopted across many different AI applications.
 
-Server-side there is a large ecosystem of reference and community servers wrapping databases, file systems, Git, GitHub, Google Drive, Suõ? — in short, anything worth exposing as a tool or data source can be packaged as an MCP server.
+Server-side there is a large ecosystem of reference and community servers wrapping databases, file systems, Git, GitHub, Google Drive, Slack, and more — in short, anything worth exposing as a tool or data source can be packaged as an MCP server.
 
- прак??? For new teammates: if you need data or a capability in an AI assistant, first check whether an MCP server already exists for it before writing one.
+Practical takeaway: for new teammates, if you need data or a capability in an AI assistant, first check whether an MCP server already exists for it before writing one.
 
 *(Sources: [What is the Model Context Protocol? — ecosystem support section](https://modelcontextprotocol.io/introduction); [MCP clients overview](https://modelcontextprotocol.io/clients))*
 
 ## 4. Video Walkthroughs
 
-A short selection of introduction material — a conference talk, a vendor tutorial, and a son of the official conference workshop. Each entry is a link with its title, publisher, and duration where available.
+A short selection of introduction material — a conference talk, a vendor tutorial, and a talk from the official conference workshop. Each entry is a link with its title, publisher, and duration where available.
 
 1. **30 minutes to understand MCP (Model Context Protocol)** — Sébastien Blanc, Devoxx UK 2025 (conference talk). Duration: 32m. [Watch on YouTube](https://youtu.be/hICGtUH7K-4). A hands-on talk covering the MCP protocol, architecture, and a live demo building a bot with an MCP server.
-2. **Building Agents with Model Context Protocol - Full Workshop with Mahesh Murag of Anthropic** — AI Engineer channel (live workshop by Mahesh Murag of Anthropic's Applied AI team). Duration: 1:44:12. [Watch on YouTube](https://www.youtube.com/watch?v=kQmXtrmQ5Zg). The authoritative deep-dive: MCP philosophy, the N Times M integration problem, the three primitives (tools/resources/prompts), sampling, composability, remote servers, and the roadmap.
+2. **Building Agents with Model Context Protocol - Full Workshop with Mahesh Murag of Anthropic** — AI Engineer channel (live workshop by Mahesh Murag of Anthropic's Applied AI team). Duration: 1:44:12. [Watch on YouTube](https://www.youtube.com/watch?v=kQmXtrmQ5Zg). The authoritative deep-dive: MCP philosophy, the N times M integration problem, the three primitives (tools/resources/prompts), sampling, composability, remote servers, and the roadmap.
 3. **MCP vs API: Simplifying AI Agent Integration with External Data** — IBM Technology (tutorial). Duration: not listed in the listing. [Watch on YouTube](https://www.youtube.com/watch?v=7j1t3UZA1TY). A clear explainer contrasting MCP with traditional REST APIs, using the USB-C analogy and covering tools, resources, and prompt templates.
 
 *(Sources: video listings as cited above; background research drew on the official MCP documentation pages listed in Sections 1–3.)*
